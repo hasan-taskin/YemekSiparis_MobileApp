@@ -1,6 +1,5 @@
 package com.example.yemeksiparisuygulamasi.data.datasource
 
-import android.util.Log
 import com.example.yemeksiparisuygulamasi.data.entity.Yemekler
 import com.example.yemeksiparisuygulamasi.retrofit.YemeklerDao
 import kotlinx.coroutines.Dispatchers
@@ -19,11 +18,13 @@ class YemeklerDataSource(var ydao:YemeklerDao) {
                        yemek_siparis_adet:Int,
                        kullanici_adi:String) = ydao.kaydet(yemek_adi, yemek_resim_adi, yemek_fiyat, yemek_siparis_adet, kullanici_adi)
 
-    suspend fun ara(aramaKelimesi:String): List<Yemekler> =//arama cubugu
-        withContext(Dispatchers.IO){
-            val yemeklerListesi = ArrayList<Yemekler>()
-            val y1 = Yemekler(1,"Django","django",24)
-            yemeklerListesi.add(y1)
-            return@withContext yemeklerListesi
+    suspend fun ara(aramaKelimesi: String): List<Yemekler> =
+        withContext(Dispatchers.IO) {
+            val tumYemekler = ydao.yemekleriYukle().yemekler
+            val filtrelenmisListe = tumYemekler.filter {
+                it.yemek_adi.contains(aramaKelimesi, ignoreCase = true)
+            }
+            return@withContext filtrelenmisListe
         }
+
 }

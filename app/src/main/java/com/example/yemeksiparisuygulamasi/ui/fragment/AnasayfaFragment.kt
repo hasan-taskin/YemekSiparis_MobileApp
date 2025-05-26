@@ -23,22 +23,31 @@ import dagger.hilt.android.AndroidEntryPoint
 class AnasayfaFragment : Fragment() {
     private var _binding: FragmentAnasayfaBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: AnasayfaViewModel by viewModels() // Burada direkt tanımlayın
+    private val viewModel: AnasayfaViewModel by viewModels()
+    private lateinit var yemeklerAdapter: YemeklerAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentAnasayfaBinding.inflate(inflater, container, false)
 
-        // Observer'ı sadece bir kez kurun
+        setupAdapter()
         setupObservers()
         setupUI()
 
         return binding.root
     }
 
+    private fun setupAdapter() {
+
+        yemeklerAdapter = YemeklerAdapter(requireContext(), mutableListOf(), viewModel)
+        binding.yemekRv.adapter = yemeklerAdapter
+        binding.yemekRv.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+    }
+
     private fun setupObservers() {
         viewModel.yemeklerListesi.observe(viewLifecycleOwner) { yemeklerListesi ->
-            val yemeklerAdapter = YemeklerAdapter(requireContext(), yemeklerListesi, viewModel)
-            binding.yemekRv.adapter = yemeklerAdapter
+
+            yemeklerAdapter.updateData(yemeklerListesi)
+            binding.yemekRv.scrollToPosition(0)
         }
     }
 
@@ -48,7 +57,6 @@ class AnasayfaFragment : Fragment() {
         }
 
         binding.toolbarAnasayfa.title = "Yemekler"
-        binding.yemekRv.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
         binding.svAnasayfa.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
@@ -70,6 +78,7 @@ class AnasayfaFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.yemekleriYukle()
+        binding.yemekRv.scrollToPosition(0)
     }
 
     override fun onDestroyView() {
@@ -77,3 +86,4 @@ class AnasayfaFragment : Fragment() {
         _binding = null
     }
 }
+

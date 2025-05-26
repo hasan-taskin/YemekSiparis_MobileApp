@@ -18,16 +18,13 @@ class AnasayfaViewModel @Inject constructor(private val yrepo: YemeklerRepositor
     private val _yemeklerListesi = MutableLiveData<List<Yemekler>>()
     val yemeklerListesi: LiveData<List<Yemekler>> = _yemeklerListesi
 
-    init {
-        yemekleriYukle()
-    }
 
     fun kaydet(yemek_adi: String,
                yemek_resim_adi: String,
                yemek_fiyat: Int,
                yemek_siparis_adet: Int,
                kullanici_adi: String) {
-        viewModelScope.launch { // CoroutineScope yerine viewModelScope kullanın
+        viewModelScope.launch {
             yrepo.kaydet(yemek_adi, yemek_resim_adi, yemek_fiyat, yemek_siparis_adet, kullanici_adi)
         }
     }
@@ -35,7 +32,8 @@ class AnasayfaViewModel @Inject constructor(private val yrepo: YemeklerRepositor
     fun yemekleriYukle() {
         viewModelScope.launch {
             try {
-                _yemeklerListesi.value = yrepo.yemekleriYukle()
+                val yemekler = yrepo.yemekleriYukle()
+                _yemeklerListesi.postValue(yemekler)
             } catch (e: Exception) {
                 Log.e("AnasayfaViewModel", "Yemekler yüklenirken hata: ${e.message}")
             }
@@ -45,7 +43,8 @@ class AnasayfaViewModel @Inject constructor(private val yrepo: YemeklerRepositor
     fun ara(aramaKelimesi: String) {
         viewModelScope.launch {
             try {
-                _yemeklerListesi.value = yrepo.ara(aramaKelimesi)
+                val sonuclar = yrepo.ara(aramaKelimesi)
+                _yemeklerListesi.postValue(sonuclar)
             } catch (e: Exception) {
                 Log.e("AnasayfaViewModel", "Arama yapılırken hata: ${e.message}")
             }

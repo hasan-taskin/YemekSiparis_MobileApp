@@ -22,32 +22,31 @@ class SepetYemeklerAdapter(var mContext: Context,var sepetYemeklerListesi:List<S
         return SepetCardTasarimTutucu(binding)
     }
 
-    override fun onBindViewHolder(holder: SepetCardTasarimTutucu, position: Int) {//tiklama yazi yazdirma vs. islemlerin yapildigi alan
+    override fun onBindViewHolder(holder: SepetCardTasarimTutucu, position: Int) {
         val sepetYemek = sepetYemeklerListesi.get(position)
         val t = holder.tasarim
 
-        t.tvSepetYemekAdi.text = sepetYemek.yemek_adi//yemek adi
+        t.tvSepetYemekAdi.text = sepetYemek.yemek_adi
 
-        t.tvSepetYemekFiyat.text = "${sepetYemek.yemek_fiyat} ₺"//yemek fiyati
+        t.tvSepetYemekFiyat.text = "${sepetYemek.yemek_fiyat} ₺"
 
-        t.tvSepetYemekAdet.text = "${sepetYemek.yemek_siparis_adet}"//yemek adeti
+        t.tvSepetYemekAdet.text = "${sepetYemek.yemek_siparis_adet}"
 
-        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${sepetYemek.yemek_resim_adi}"//glide ile yemek görsellerine erisiyoruz
+        t.tvSepetYemekToplamFiyat.text = "${sepetYemek.yemek_fiyat} ₺"
+
+        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${sepetYemek.yemek_resim_adi}"
         Glide.with(mContext).load(url).override(250,375).into(t.ivSepetResim)
 
-        t.ivSepetSil.setOnClickListener { //sil butonu
+        t.ivSepetSil.setOnClickListener {
             Snackbar.make(it, "${sepetYemek.yemek_adi} silinsin mi?", Snackbar.LENGTH_SHORT)
                 .setAction("EVET") {
                     viewModel.sil(sepetYemek.sepet_yemek_id, "hasan-taskin")
                 }
                 .show()
         }
-
-
-        //t.tvSepetYemekToplamFiyat.text = //card icindeki toplam fiyat
     }
 
-    override fun getItemCount(): Int {//kac tane veri gostereceksin
+    override fun getItemCount(): Int {
         return sepetYemeklerListesi.size
     }
 

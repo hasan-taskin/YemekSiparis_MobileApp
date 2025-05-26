@@ -15,7 +15,7 @@ class YemekSepetViewModel @Inject constructor (var yrepo:YemeklerRepository) :Vi
     var sepetYemeklerListesi = MutableLiveData<List<SepetYemekler>>()
 
     init {
-        sepetYemekleriYukle()//verilerin yuklenmesi icim fonkksiyonu calistiriyoruz
+        sepetYemekleriYukle()
     }
 
     fun sil(sepet_yemek_id: Int,kullanici_adi:String){

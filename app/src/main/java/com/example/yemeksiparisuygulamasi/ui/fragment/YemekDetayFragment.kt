@@ -23,19 +23,21 @@ class YemekDetayFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentYemekDetayBinding.inflate(inflater, container, false)
 
-        val bundle:YemekDetayFragmentArgs by navArgs()//adapterden gelen yemek nesnesini aliyoruz
+        val bundle:YemekDetayFragmentArgs by navArgs()
         val yemek = bundle.yemek
 
-        binding.toolbarYemekDetay.title = yemek.yemek_adi//toolbar yazisini yemek ismi yapiyoruz
+        binding.toolbarYemekDetay.title = yemek.yemek_adi
 
-        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${yemek.yemek_resim_adi}"//glide ile yemek görsellerine erisiyoruz
+        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${yemek.yemek_resim_adi}"
         Glide.with(this).load(url).override(500,750).into(binding.ivYemek)
 
-        binding.tvYemekFiyat.text = "${yemek.yemek_fiyat} ₺"//detay sayfasindaki yemek fiyati degisikligi
+        binding.tvYemekFiyat.text = "${yemek.yemek_fiyat} ₺"
 
-        binding.tvYemekIsim.text = "${yemek.yemek_adi}"//detay sayfasindaki yemek adi degisikligi
+        binding.tvYemekIsim.text = "${yemek.yemek_adi}"
 
-        binding.btnSepeteEkle.setOnClickListener { // ekle buton alanı
+        binding.tvYemekToplamFiyat.text = "${yemek.yemek_fiyat} ₺"
+
+        binding.btnSepeteEkle.setOnClickListener {
             buttonkaydet(
                 yemek_adi = yemek.yemek_adi,
                 yemek_resim_adi = yemek.yemek_resim_adi,
@@ -43,7 +45,6 @@ class YemekDetayFragment : Fragment() {
             )
             Snackbar.make(it, "${yemek.yemek_adi} sepete eklendi", Snackbar.LENGTH_SHORT).show()
         }
-
 
         return binding.root
     }

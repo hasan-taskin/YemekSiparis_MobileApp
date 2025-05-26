@@ -2,10 +2,9 @@ package com.example.yemeksiparisuygulamasi.retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Url
 
 class RetrofitClient {
-    companion object{//static
+    companion object{
         fun getClient(baseUrl: String): Retrofit {
             return Retrofit.Builder()
                 .baseUrl(baseUrl)

@@ -17,28 +17,33 @@ import com.example.yemeksiparisuygulamasi.ui.viewmodel.YemekSepetViewModel
 import com.example.yemeksiparisuygulamasi.util.gecisYap
 import com.google.android.material.snackbar.Snackbar
 
-class YemeklerAdapter(var mContext: Context, var yemeklerListesi:List<Yemekler>,var viewModel: AnasayfaViewModel)
+class YemeklerAdapter(var mContext: Context, private var yemeklerListesi: MutableList<Yemekler>, var viewModel: AnasayfaViewModel)
     : RecyclerView.Adapter<YemeklerAdapter.CardTasarimTutucu>() {
 
     inner class CardTasarimTutucu(var tasarim: CardTasarimBinding) : RecyclerView.ViewHolder(tasarim.root)
+
+    fun updateData(newList: List<Yemekler>) {
+        yemeklerListesi.clear()
+        yemeklerListesi.addAll(newList)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardTasarimTutucu {
         val binding = CardTasarimBinding.inflate(LayoutInflater.from(mContext), parent, false)
         return CardTasarimTutucu(binding)
     }
 
-    override fun onBindViewHolder(holder: CardTasarimTutucu, position: Int) {//tiklama yazi yazdirma vs. islemlerin yapildigi alan
-        val yemek = yemeklerListesi.get(position)
+    override fun onBindViewHolder(holder: CardTasarimTutucu, position: Int) {
+        val yemek = yemeklerListesi[position]
         val t = holder.tasarim
 
-        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${yemek.yemek_resim_adi}"//glide ile yemek görsellerine erisiyoruz
+        val url = "http://kasimadalan.pe.hu/yemekler/resimler/${yemek.yemek_resim_adi}"
         Glide.with(mContext).load(url).override(500,750).into(t.ivCardYemek)
-
 
         t.tvFiyat.text = "${yemek.yemek_fiyat} ₺"
 
-        t.cardViewYemek.setOnClickListener {//card in ustune tiklaninca yapilacaklar
-            val gecis = AnasayfaFragmentDirections.yemekDetayGecis(yemek = yemek)//veri transferi ve sayfa gecisi
+        t.cardViewYemek.setOnClickListener {
+            val gecis = AnasayfaFragmentDirections.yemekDetayGecis(yemek = yemek)
             Navigation.gecisYap(it,gecis)
         }
 
@@ -54,7 +59,7 @@ class YemeklerAdapter(var mContext: Context, var yemeklerListesi:List<Yemekler>,
         }
     }
 
-    override fun getItemCount(): Int {//Listeleme kac tane yemek gosterecek
+    override fun getItemCount(): Int {
         return yemeklerListesi.size
     }
 }

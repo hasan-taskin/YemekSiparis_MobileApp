@@ -10,7 +10,7 @@
         android:id="@+id/toolbarAnasayfa"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/material_dynamic_neutral80"
+        android:background="@drawable/toolbar_gradient"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +26,7 @@
         android:layout_marginBottom="24dp"
         android:clickable="true"
         android:src="@drawable/sepet_resim"
+        app:backgroundTint="@android:color/holo_orange_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
