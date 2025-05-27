@@ -1,7 +1,5 @@
 ![Image](https://github.com/user-attachments/assets/68b7c22a-67d1-4430-be85-a0d4634c8250)
 
-Mobil Uygulaması projesinde kullanılan mimari yapı ve teknolojiler detaylı ve okunabilir bir şekilde listelenmiştir:
-
 Kullanılan Teknolojiler ve Mimariler
 
  Geliştirme Dili & Ortamı
@@ -39,5 +37,6 @@ RecyclerView – Listeleme işlemleri için kullanılmıştır (yemek listesi, s
 
 Material Design – Android’in önerdiği kullanıcı arayüzü standartlarına uygun tasarım elemanları tercih edilmiştir.
 
-Bu proje; modern Android geliştirme pratiklerini, sağlam mimari yapıları ve güncel teknolojileri bir arada kullanarak hem teknik yetkinlikleri sergilemek hem de gerçek bir uygulama deneyimi sunmak amacıyla geliştirilmiştir. Eğitmenim Sayın Kasım Adalan Ve Pupilicaya teşekkürler.
+Bu proje; modern Android geliştirme pratiklerini, sağlam mimari yapıları ve güncel teknolojileri bir arada kullanarak hem teknik yetkinlikleri sergilemek hem de gerçek bir uygulama deneyimi sunmak amacıyla geliştirilmiştir. 
+Eğitmenim Sayın Kasım Adalan Ve Pupilicaya teşekkürler.
 
