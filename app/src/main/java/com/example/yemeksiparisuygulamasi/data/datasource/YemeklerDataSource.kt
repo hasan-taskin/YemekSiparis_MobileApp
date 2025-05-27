@@ -26,5 +26,4 @@ class YemeklerDataSource(var ydao:YemeklerDao) {
             }
             return@withContext filtrelenmisListe
         }
-
 }

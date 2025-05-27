@@ -19,7 +19,35 @@ class YemekDetayViewModel @Inject constructor(private val yrepo: YemeklerReposit
         kullanici_adi: String = "hasan-taskin"
     ) {
         CoroutineScope(Dispatchers.Main).launch {
-            yrepo.kaydet(yemek_adi, yemek_resim_adi, yemek_fiyat, yemek_siparis_adet, kullanici_adi)
+            val mevcutSepet = yrepo.sepetYemekleriYukle()
+
+            val ayniYemek = mevcutSepet.find {
+                it.yemek_adi == yemek_adi && it.kullanici_adi == kullanici_adi
+            }
+
+            if (ayniYemek != null) {
+                val yeniAdet = ayniYemek.yemek_siparis_adet + yemek_siparis_adet
+
+                yrepo.sil(ayniYemek.sepet_yemek_id, kullanici_adi)
+
+                yrepo.kaydet(
+                    yemek_adi = yemek_adi,
+                    yemek_resim_adi = yemek_resim_adi,
+                    yemek_fiyat = yemek_fiyat,
+                    yemek_siparis_adet = yeniAdet,
+                    kullanici_adi = kullanici_adi
+                )
+            } else {
+                yrepo.kaydet(
+                    yemek_adi = yemek_adi,
+                    yemek_resim_adi = yemek_resim_adi,
+                    yemek_fiyat = yemek_fiyat,
+                    yemek_siparis_adet = yemek_siparis_adet,
+                    kullanici_adi = kullanici_adi
+                )
+            }
         }
     }
 }
+
+

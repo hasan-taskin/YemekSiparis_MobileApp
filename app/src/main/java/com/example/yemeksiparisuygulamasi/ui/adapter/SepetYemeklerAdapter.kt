@@ -23,19 +23,18 @@ class SepetYemeklerAdapter(var mContext: Context,var sepetYemeklerListesi:List<S
     }
 
     override fun onBindViewHolder(holder: SepetCardTasarimTutucu, position: Int) {
-        val sepetYemek = sepetYemeklerListesi.get(position)
+        val sepetYemek = sepetYemeklerListesi[position]
         val t = holder.tasarim
 
         t.tvSepetYemekAdi.text = sepetYemek.yemek_adi
-
         t.tvSepetYemekFiyat.text = "${sepetYemek.yemek_fiyat} ₺"
-
         t.tvSepetYemekAdet.text = "${sepetYemek.yemek_siparis_adet}"
 
-        t.tvSepetYemekToplamFiyat.text = "${sepetYemek.yemek_fiyat} ₺"
+        val toplamFiyat = sepetYemek.yemek_fiyat * sepetYemek.yemek_siparis_adet
+        t.tvSepetYemekToplamFiyat.text = "$toplamFiyat ₺"
 
         val url = "http://kasimadalan.pe.hu/yemekler/resimler/${sepetYemek.yemek_resim_adi}"
-        Glide.with(mContext).load(url).override(250,375).into(t.ivSepetResim)
+        Glide.with(mContext).load(url).override(250, 375).into(t.ivSepetResim)
 
         t.ivSepetSil.setOnClickListener {
             Snackbar.make(it, "${sepetYemek.yemek_adi} silinsin mi?", Snackbar.LENGTH_SHORT)
